@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Servicios de inclusión Bogotá – Prototipo de pantallas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido principal</a>
+<header>
+ <div class="bar">
+  <a class="logo" href="#inicio">Servicios de inclusión · Bogotá</a>
+  <nav id="nav" aria-label="Principal"></nav>
+  <div class="tools" role="group" aria-label="Opciones de accesibilidad y perfil de prueba">
+   <button class="btn" id="abtn" aria-expanded="false" aria-controls="apanel">Accesibilidad</button>
+   <label for="rol">Ver como</label>
+   <select id="rol" style="width:auto"><option value="usuario">Usuario</option><option value="entidad">Entidad</option><option value="admin">Administrador</option></select>
+  </div>
+ </div>
+</header>
+
+<div id="apanel" class="apanel" role="region" aria-label="Opciones de accesibilidad" hidden>
+ <div class="apin"><div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem"><h2 id="a-h" tabindex="-1" style="margin:0">Accesibilidad</h2><button class="btn sec" id="acerrar">Cerrar<span class="sr"> menú de accesibilidad</span></button></div>
+  <div><strong id="a-t1">Tamaño del texto</strong><div class="arow" role="group" aria-labelledby="a-t1"><button class="btn sec" id="menos">A−<span class="sr"> Reducir texto</span></button><button class="btn sec" id="mas">A+<span class="sr"> Aumentar texto</span></button></div></div>
+  <div><strong id="a-t2">Apariencia</strong><div class="arow" role="group" aria-labelledby="a-t2"><button class="btn sec" data-th="auto" aria-pressed="false">Automática</button><button class="btn sec" data-th="light" aria-pressed="false">Clara</button><button class="btn sec" data-th="dark" aria-pressed="false">Oscura</button></div></div>
+  <div><strong id="a-t3">Lectura</strong><div class="arow" role="group" aria-labelledby="a-t3"><button class="btn sec" id="a-con" data-tog="contrast" aria-pressed="false">Alto contraste</button><button class="btn sec" id="a-esp" data-tog="space" aria-pressed="false">Más espacio en el texto</button><button class="btn sec" id="a-lin" data-tog="links" aria-pressed="false">Resaltar enlaces</button></div></div>
+  <div><strong id="a-t4">Ayudas</strong><div class="arow" role="group" aria-labelledby="a-t4"><button class="btn sec" id="a-reg" data-tog="regla" aria-pressed="false">Guía de lectura</button><button class="btn sec" id="a-lsc" data-tog="lsc" aria-pressed="false">Intérprete LSC (señas)</button><button class="btn sec" id="a-lec" data-tog="lector" aria-pressed="false">Uso lector de pantalla: ocultar ayudas visuales</button><button class="btn sec" id="a-voz">Leer pantalla en voz alta</button><a class="btn sec" href="#saac">Tablero SAAC (comunicación)</a><a class="btn sec" href="#accesibilidad">Contacto de accesibilidad</a><a class="btn sec" href="https://www.convertic.gov.co" target="_blank" rel="noopener">Descargar ConVerTIC<span class="sr"> (se abre en otra pestaña)</span></a><button class="btn sec" id="a-res">Restablecer todo</button></div></div>
+ </div>
+</div>
+
+<main id="main" tabindex="-1">
+<p class="demo"><strong>Prototipo de diseño.</strong> Los datos, entidades y servicios son ficticios. Nada se guarda ni se envía. El selector «Ver como» permite recorrer los tres perfiles del sistema.</p>
+
+<section id="inicio">
+ <div class="hero">
+  <h1 tabindex="-1">Encuentra el servicio de inclusión que necesitas, en un solo lugar</h1>
+  <p>Salud, educación, empleo y apoyo social de distintas entidades de Bogotá, reunidos y filtrados por tu localidad y tu necesidad.</p>
+  <form id="fhero" role="search">
+   <label class="sr" for="qhero">¿Qué servicio buscas?</label>
+   <input id="qhero" type="search" placeholder="Ejemplo: terapia, empleo, subtítulos">
+   <button class="btn" type="submit">Buscar servicios</button>
+  </form>
+ </div>
+ <h2>Explora por categoría</h2>
+ <div class="cats" id="cats"></div>
+ <div class="two">
+  <div class="card"><h2>¿Primera vez aquí?</h2><p>Crea tu cuenta y completa tu perfil. Así podemos mostrarte primero los servicios que te corresponden.</p><a class="btn" href="#acceso">Crear cuenta o ingresar</a></div>
+  <div class="card"><h2>Conoce tus derechos</h2><p>Consulta qué garantiza la ley y cuál es la ruta para solicitar atención.</p><a class="btn sec" href="#derechos">Ver derechos y rutas</a></div>
+ </div>
+</section>
+
+<section id="acceso" hidden>
+ <h1 tabindex="-1">Ingresar o crear cuenta</h1>
+ <div class="two">
+  <form class="card" id="flogin">
+   <h2>Ya tengo cuenta</h2>
+   <label for="l-id">Correo electrónico o número de documento</label>
+   <input id="l-id" required autocomplete="username">
+   <label for="l-pw">Contraseña</label>
+   <input id="l-pw" type="password" required autocomplete="current-password">
+   <p class="hint">Puedes pegar tu contraseña. No pedimos resolver acertijos para ingresar.</p>
+   <button class="btn" type="submit">Ingresar</button>
+  </form>
+  <form class="card" id="freg">
+   <h2>Soy nuevo</h2>
+   <label for="r-n">Nombre completo</label>
+   <input id="r-n" required autocomplete="name">
+   <label for="r-m">Correo electrónico</label>
+   <input id="r-m" type="email" required autocomplete="email">
+   <label for="r-p">Contraseña (mínimo 8 caracteres)</label>
+   <input id="r-p" type="password" minlength="8" required autocomplete="new-password">
+   <label class="chk"><input type="checkbox" required> Autorizo el tratamiento de mis datos según la <a href="#privacidad">política de privacidad</a>.</label>
+   <button class="btn" type="submit">Crear cuenta</button>
+  </form>
+ </div>
+</section>
+
+<section id="perfil" hidden>
+ <h1 tabindex="-1">Mi perfil de caracterización</h1>
+ <p>Solo pedimos lo necesario para recomendarte servicios. Puedes cambiarlo cuando quieras.</p>
+ <form id="fperfil" class="card">
+  <label for="p-n">Nombre</label><input id="p-n" value="Persona de prueba" autocomplete="name">
+  <label for="p-l">Localidad de residencia</label><select id="p-l"></select>
+  <fieldset><legend>Tipo de discapacidad (puedes marcar varias)</legend><div id="p-d"></div></fieldset>
+  <label for="p-x">Apoyos que necesitas (opcional)</label>
+  <textarea id="p-x" placeholder="Ejemplo: intérprete de lengua de señas, rampa de acceso"></textarea>
+  <button class="btn" type="submit">Guardar perfil</button>
+ </form>
+</section>
+
+<section id="servicios" hidden>
+ <h1 tabindex="-1">Servicios de inclusión</h1>
+ <form id="ffil" role="search" class="card">
+  <div class="filters">
+   <div><label for="q">Palabra clave</label><input id="q" type="search"></div>
+   <div><label for="fc">Categoría</label><select id="fc"></select></div>
+   <div><label for="fl">Localidad</label><select id="fl"></select></div>
+   <div><label for="fd">Tipo de discapacidad</label><select id="fd"></select></div>
+  </div>
+  <button class="btn sec" type="button" id="limpiar">Quitar filtros</button>
+ </form>
+ <p id="cnt" aria-live="polite" style="font-weight:700"></p>
+ <ul class="plain grid" id="lista"></ul>
+</section>
+
+<section id="detalle" hidden>
+ <p><a href="#servicios">Volver a los servicios</a></p>
+ <h1 tabindex="-1" id="dt">Detalle</h1>
+ <div class="card" id="dbody"></div>
+</section>
+
+<section id="solicitudes" hidden>
+ <h1 tabindex="-1">Mis solicitudes</h1>
+ <div class="wrap"><table><caption class="sr">Solicitudes enviadas y su estado</caption><thead><tr><th scope="col">Servicio</th><th scope="col">Entidad</th><th scope="col">Estado</th></tr></thead><tbody id="tsol"></tbody></table></div>
+ <h2 style="margin-top:1.5rem">Notificaciones</h2>
+ <ul class="plain" id="notif"></ul>
+</section>
+
+<section id="derechos" hidden>
+ <h1 tabindex="-1">Derechos y rutas de atención</h1>
+ <p class="hint">Contenido ilustrativo. En la versión real lo redactaría y validaría la entidad competente.</p>
+ <details open><summary>Tus derechos</summary><p>La Ley 1346 de 2009 y la Ley 1618 de 2013 reconocen la igualdad de oportunidades y la eliminación de barreras. La Ley 1680 de 2013 protege el acceso a la información y las comunicaciones para personas ciegas y con baja visión.</p></details>
+ <details><summary>Cómo solicitar atención</summary><ol class="steps"><li>Completa tu perfil en esta plataforma.</li><li>Busca el servicio y revisa los requisitos.</li><li>Envía la solicitud desde la página del servicio.</li><li>Sigue el estado en «Mis solicitudes».</li></ol></details>
+ <details><summary>Qué hacer si te niegan un servicio</summary><p>Guarda la respuesta que recibiste y consulta con la entidad el motivo y los pasos para presentar una nueva solicitud o un reclamo.</p></details>
+</section>
+
+<section id="entidad" hidden>
+ <h1 tabindex="-1">Panel de la entidad</h1>
+ <div class="two">
+  <form class="card" id="fent">
+   <h2>Registrar un servicio</h2>
+   <label for="e-n">Nombre del servicio</label><input id="e-n" required>
+   <label for="e-c">Categoría</label><select id="e-c"></select>
+   <label for="e-l">Localidad</label><select id="e-l"></select>
+   <label for="e-d">Descripción</label><textarea id="e-d" required></textarea>
+   <p class="hint">Un administrador revisa el servicio antes de publicarlo.</p>
+   <button class="btn" type="submit">Enviar a revisión</button>
+  </form>
+  <div>
+   <h2>Solicitudes recibidas</h2>
+   <div class="wrap"><table><caption class="sr">Solicitudes recibidas por la entidad</caption><thead><tr><th scope="col">Solicitante</th><th scope="col">Servicio</th><th scope="col">Acción</th></tr></thead>
+   <tbody id="trec"></tbody></table></div>
+  </div>
+ </div>
+</section>
+
+<section id="admin" hidden>
+ <h1 tabindex="-1">Administración</h1>
+ <h2>Resumen de uso</h2>
+ <div class="grid" id="stats" style="margin-bottom:1.5rem"></div>
+ <h2>Entidades y usuarios por validar</h2>
+ <div class="wrap"><table><caption class="sr">Registros pendientes de validación</caption><thead><tr><th scope="col">Registro</th><th scope="col">Tipo</th><th scope="col">Acción</th></tr></thead><tbody id="tpend"></tbody></table></div>
+ <h2 style="margin-top:1.5rem">Configuración</h2>
+ <div class="two"><div class="card"><h2>Categorías</h2><p id="cfgc"></p></div><div class="card"><h2>Localidades disponibles</h2><p id="cfgl"></p></div></div>
+</section>
+
+<section id="saac" hidden>
+ <h1 tabindex="-1">Tablero de comunicación (SAAC)</h1>
+ <p>Toca las imágenes para armar un mensaje. Pulsa «Hablar» para escucharlo o muéstraselo a otra persona.</p>
+ <div class="msg" id="msg" role="status" aria-label="Mensaje armado"></div>
+ <div class="arow" style="margin-bottom:1rem"><button class="btn" id="shablar">Hablar</button><button class="btn sec" id="sbor1">Borrar última</button><button class="btn sec" id="sbor">Borrar todo</button></div>
+ <div id="saacg"></div>
+ <p class="hint">Prototipo con emojis. Una versión real usaría pictogramas con licencia abierta (como los de ARASAAC) y tableros personalizables por cada persona.</p>
+</section>
+
+<section id="accesibilidad" hidden>
+ <h1 tabindex="-1">Accesibilidad y contacto</h1>
+ <div class="two">
+  <div class="card"><h2>Nuestro compromiso</h2><p>La plataforma se diseña para cumplir WCAG 2.2 nivel AA. Este es un prototipo y aún no tiene una auditoría formal, así que el cumplimiento es parcial.</p><p>Si encuentras una barrera, avísanos con el formulario.</p></div>
+  <div class="card"><h2>Descargar lector y magnificador de pantalla</h2><p>ConVerTIC es el programa del Ministerio TIC que ofrece gratis software lector y magnificador de pantalla para personas con discapacidad visual que usan Windows.</p><a class="btn" href="https://www.convertic.gov.co" target="_blank" rel="noopener">Ir a ConVerTIC<span class="sr"> (se abre en otra pestaña)</span></a><p class="hint">Confirma en el sitio oficial qué programas y condiciones están vigentes.</p></div>
+ </div>
+ <form class="card" id="fcon" style="margin-top:1.25rem">
+  <h2>Reportar una barrera de accesibilidad</h2>
+  <label for="c-p">¿En qué pantalla ocurrió?</label><input id="c-p">
+  <label for="c-d">¿Qué problema encontraste?</label><textarea id="c-d" required></textarea>
+  <label for="c-t">Tecnología de apoyo que usas (opcional)</label><input id="c-t" placeholder="Ejemplo: NVDA con Firefox">
+  <label for="c-m">Correo para responderte (opcional)</label><input id="c-m" type="email" autocomplete="email">
+  <p class="hint">También puedes escribir a accesibilidad@ejemplo.org (dato de ejemplo).</p>
+  <button class="btn" type="submit">Enviar reporte</button>
+ </form>
+</section>
+
+<section id="privacidad" hidden>
+ <h1 tabindex="-1">Política de privacidad</h1>
+ <p>Solo recogemos los datos necesarios para caracterizarte y gestionar tus solicitudes. Los datos de salud y discapacidad son sensibles: solo los tratamos con tu autorización. Puedes conocer, actualizar o pedir la eliminación de tus datos en cualquier momento, según la Ley 1581 de 2012.</p>
+ <p class="hint">Texto ilustrativo para el prototipo.</p>
+</section>
+</main>
+
+<footer>Prototipo académico · Diseño con criterios WCAG 2.2 AA · <a href="#privacidad">Política de privacidad</a> · <a href="#derechos">Derechos y rutas</a> · <a href="#accesibilidad">Accesibilidad y contacto</a> · <a href="#saac">Tablero SAAC</a></footer>
+<button class="btn fab" id="fab" aria-label="Abrir menú de accesibilidad" aria-controls="apanel"><span aria-hidden="true">♿</span></button>
+<div id="regla" hidden aria-hidden="true"></div>
+<aside id="lsc" hidden aria-label="Intérprete de lengua de señas colombiana"><div style="display:flex;justify-content:space-between;align-items:center"><strong>Intérprete LSC</strong><button class="btn sec" id="lscx">Cerrar<span class="sr"> intérprete</span></button></div><div class="vid"><span><span aria-hidden="true">🧏</span><br>Aquí iría el video del intérprete de LSC de esta pantalla (ejemplo)</span></div><div class="sub" id="lsct" aria-live="polite"></div></aside>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
