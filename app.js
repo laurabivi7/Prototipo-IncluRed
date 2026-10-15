@@ -19,14 +19,14 @@ var S=[
 {id:16,n:"Visitas guiadas accesibles a museos",e:"Red de Museos Demo",c:"Cultura",l:"Santa Fe",d:["Visual", "Auditiva"],t:"Recorridos táctiles, con audiodescripción y con interpretación en lengua de señas.",r:"Reserva con ocho días de anticipación."},
 {id:17,n:"Asesoría jurídica sobre derechos",e:"Consultorio Jurídico Demo",c:"Justicia y derechos",l:"Los Mártires",d:["Visual", "Auditiva", "Física", "Intelectual", "Psicosocial", "Múltiple"],t:"Orientación gratuita para reclamar derechos, presentar tutelas y pedir apoyos.",r:"Documento de identidad."},
 {id:18,n:"Apoyo para la toma de decisiones",e:"Defensoría Demo",c:"Justicia y derechos",l:"Barrios Unidos",d:["Intelectual", "Psicosocial"],t:"Acompañamiento legal para decidir con apoyos sobre salud, dinero y vida diaria.",r:"Cita previa."},
-{id:19,n:"Valoración de la discapacidad",e:"Centro de Valoración Demo",c:"Salud",l:"Puente Aranda",d:["Visual", "Auditiva", "Física", "Intelectual", "Psicosocial", "Múltiple"],t:"Evaluación para obtener el certificado de discapacidad.",r:"Documento de identidad e historia clínica."},
-{id:20,n:"Audiometría y ayudas auditivas",e:"Clínica Auditiva Demo",c:"Salud",l:"Antonio Nariño",d:["Auditiva"],t:"Pruebas auditivas y entrega de audífonos con seguimiento.",r:"Orden médica."},
+{id:19,n:"Valoración de la discapacidad",e:"Centro de Rehabilitación Demo",c:"Salud",l:"Puente Aranda",d:["Visual", "Auditiva", "Física", "Intelectual", "Psicosocial", "Múltiple"],t:"Evaluación para obtener el certificado de discapacidad.",r:"Documento de identidad e historia clínica."},
+{id:20,n:"Audiometría y ayudas auditivas",e:"Centro de Rehabilitación Demo",c:"Salud",l:"Antonio Nariño",d:["Auditiva"],t:"Pruebas auditivas y entrega de audífonos con seguimiento.",r:"Orden médica."},
 {id:21,n:"Educación inclusiva en el aula",e:"Colegio Incluyente Demo",c:"Educación",l:"Tunjuelito",d:["Intelectual", "Visual", "Auditiva", "Física"],t:"Ajustes razonables en clase y apoyo pedagógico individual.",r:"Cupo escolar asignado."},
 {id:22,n:"Emprendimiento y capital semilla",e:"Fondo Emprendedor Demo",c:"Empleo",l:"Rafael Uribe Uribe",d:["Física", "Visual", "Auditiva", "Intelectual"],t:"Capacitación y capital semilla para negocios propios.",r:"Idea de negocio presentada."},
 {id:23,n:"Brigadas de atención en zona rural",e:"Unidad Móvil Demo",c:"Apoyo social",l:"Sumapaz",d:["Visual", "Auditiva", "Física", "Intelectual", "Psicosocial", "Múltiple"],t:"Brigadas móviles con valoración, orientación y entrega de ayudas técnicas.",r:"Registro previo en la vereda."},
 {id:24,n:"Préstamo de ayudas técnicas",e:"Banco Solidario Demo",c:"Apoyo social",l:"Usaquén",d:["Física", "Visual", "Auditiva"],t:"Préstamo de sillas de ruedas, bastones y audífonos.",r:"Formulario y orden de un profesional."}];
 var sol=[{s:S[1],est:"En revisión"}],rol="usuario",cur="inicio",sel=null,pct=100,first=true;
-var NAV={usuario:[["inicio","Inicio"],["servicios","Servicios"],["perfil","Mi perfil"],["solicitudes","Mis solicitudes"],["derechos","Derechos y rutas"],["saac","Tablero SAAC"],["accesibilidad","Accesibilidad"]],entidad:[["inicio","Inicio"],["entidad","Panel de entidad"]],admin:[["inicio","Inicio"],["admin","Administración"]]};
+var NAV={usuario:[["inicio","Inicio"],["servicios","Servicios"],["perfil","Mi perfil"],["solicitudes","Mis solicitudes"],["derechos","Derechos y rutas"],["saac","Tablero SAAC"],["accesibilidad","Accesibilidad"]],entidad:[["inicio","Inicio"],["entidad","Panel de entidad"],["ent-reportes","Reportes"],["ent-chat","Chat con admin"],["ent-noticias","Mis noticias"]],admin:[["inicio","Inicio"],["admin","Administración"],["adm-tickets","Tickets"],["adm-reportes","Reportes"],["adm-chat","Chat con entidades"],["adm-noticias","Noticias por aprobar"]]};
 var BD={"Enviada":"✉ Enviada","En revisión":"⏳ En revisión","Aprobada":"✔ Aprobada","Rechazada":"✖ Rechazada"};
 function $(s){return document.querySelector(s)}
 function opts(a,t){return '<option value="">'+t+'</option>'+a.map(function(x){return '<option>'+x+'</option>'}).join('')}
@@ -37,8 +37,8 @@ function route(){
  if(!el||el.tagName!=="SECTION"||(id==="detalle"&&!sel))id="inicio";
  cur=id;
  document.querySelectorAll("main section").forEach(function(s){s.hidden=s.id!==id});
- if(id==="servicios")lista();if(id==="solicitudes")tsol();if(id==="detalle")detalle();
- nav();document.title=document.getElementById(id).querySelector("h1").textContent+" – Servicios de inclusión Bogotá";
+ if(id==="servicios")lista();if(id==="solicitudes")tsol();if(id==="detalle")detalle();var rf=window.RT&&RT[id];if(rf)rf();
+ nav();document.title=document.getElementById(id).querySelector("h1").textContent+" – INCLURED";
  if(first){first=false}else{var h=document.getElementById(id).querySelector("h1");window.scrollTo(0,0);h.focus()}
 }
 function lista(){
@@ -52,7 +52,8 @@ function detalle(){
  $("#dbody").innerHTML='<p class="meta">'+sel.e+'</p><p>'+sel.t+'</p><dl><dt><strong>Categoría</strong></dt><dd>'+sel.c+'</dd><dt><strong>Localidad</strong></dt><dd>'+sel.l+'</dd><dt><strong>Dirigido a personas con discapacidad</strong></dt><dd>'+sel.d.join(", ")+'</dd><dt><strong>Requisitos</strong></dt><dd>'+sel.r+'</dd></dl><button class="btn" id="solic">Solicitar acceso</button>';
 }
 function tsol(){
- $("#tsol").innerHTML=sol.map(function(x){return '<tr><th scope="row">'+x.s.n+'</th><td>'+x.s.e+'</td><td><span class="badge">'+BD[x.est]+'</span></td></tr>'}).join("");
+ $("#sdet").hidden=true;
+ $("#tsol").innerHTML=sol.map(function(x,i){return '<tr><th scope="row">'+x.s.n+'</th><td>'+x.s.e+'</td><td><span class="badge">'+BD[x.est]+'</span></td><td><button class="btn sec" data-sd="'+i+'">Ver detalles<span class="sr"> de '+x.s.n+'</span></button></td></tr>'}).join("");
  $("#notif").innerHTML=sol.map(function(x){return '<li class="card" style="margin-bottom:.6rem">Tu solicitud para «'+x.s.n+'» está en estado: <strong>'+x.est+'</strong>. Te avisamos también por correo.</li>'}).join("");
 }
 function init(){
@@ -132,4 +133,47 @@ document.addEventListener("touchmove",function(e){if(P.regla)$("#regla").style.t
 document.addEventListener("focusin",function(e){if(P.regla&&e.target.getBoundingClientRect){var r=e.target.getBoundingClientRect();$("#regla").style.top=(r.top+r.height/2-20)+"px"}});
 window.addEventListener("hashchange",cap);
 $("#fcon").addEventListener("submit",function(e){e.preventDefault();this.reset();say("Reporte enviado (simulado). Gracias por avisarnos.")});
+/* ===== INCLURED: noticias, tickets, reportes, chat, detalle de solicitudes ===== */
+var ENT="Centro de Rehabilitación Demo",ENTS=[];
+BD["Pendiente"]="⏳ Pendiente";
+var NEWS=[
+{id:1,t:"Nueva convocatoria de empleo inclusivo",x:"Empresas aliadas abren vacantes con ajustes razonables. Revisa los requisitos en el servicio de orientación laboral.",f:"10 oct 2026",by:"Agencia de Empleo Demo",est:"Aprobada"},
+{id:2,t:"Jornada de valoración de la discapacidad",x:"Habrá atención sin costo para obtener el certificado de discapacidad. Inscríbete con tu documento.",f:"8 oct 2026",by:"INCLURED",est:"Aprobada"},
+{id:3,t:"Intérpretes de LSC para tus trámites",x:"Ya puedes pedir intérprete de lengua de señas con tres días de anticipación.",f:"2 oct 2026",by:"Fundación Voces Demo",est:"Aprobada"},
+{id:4,t:"Taller de movilización segura para cuidadores",x:"Aprende técnicas básicas para apoyar a una persona con movilidad reducida. Cupos limitados.",f:"14 oct 2026",by:ENT,est:"Pendiente"}];
+var TK=[{id:1,t:"El filtro de localidad se ve mal en el celular",p:"Alta",e:"Abierto"},{id:2,t:"Una entidad no recibe los correos de solicitudes",p:"Media",e:"En proceso"},{id:3,t:"Texto cortado en la página de perfil",p:"Baja",e:"Resuelto"}];
+var CH={};CH[ENT]=[{w:"adm",t:"Hola, ¿ya actualizaron los cupos del servicio de terapia?",h:"09:10"},{w:"ent",t:"Sí, quedaron 12 cupos disponibles esta semana.",h:"09:14"}];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function hora(){return new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"})}
+function noticias(){var a=NEWS.filter(function(n){return n.est==="Aprobada"});$("#news").innerHTML=a.map(function(n){return '<li class="card"><h3 style="margin:0 0 .3rem">'+esc(n.t)+'</h3><p class="meta">'+n.f+' – '+esc(n.by)+'</p><p>'+esc(n.x)+'</p></li>'}).join("")||'<li class="card">Aún no hay noticias publicadas.</li>'}
+function sdet(i){var x=sol[i],E=x.est,h=["Enviada"];if(E!=="Enviada")h.push("En revisión");if(E==="Aprobada"||E==="Rechazada")h.push(E);
+ var d=$("#sdet");d.hidden=false;
+ d.innerHTML='<h2>Detalle de la solicitud</h2><dl><dt><strong>Servicio</strong></dt><dd>'+x.s.n+'</dd><dt><strong>Entidad</strong></dt><dd>'+x.s.e+'</dd><dt><strong>Localidad</strong></dt><dd>'+x.s.l+'</dd><dt><strong>Estado actual</strong></dt><dd><span class="badge">'+BD[E]+'</span></dd><dt><strong>Requisitos</strong></dt><dd>'+x.s.r+'</dd></dl><h3>Historial</h3><ol class="tl">'+h.map(function(s){return '<li>'+s+'</li>'}).join("")+'</ol><button class="btn sec" id="sdx">Cerrar detalle</button>';
+ d.focus()}
+function tickets(){$("#ttk").innerHTML=TK.map(function(k){return '<tr><th scope="row">'+k.id+'</th><td>'+esc(k.t)+'</td><td>'+k.p+'</td><td><label class="sr" for="tk'+k.id+'">Estado del ticket '+k.id+'</label><select id="tk'+k.id+'" data-tk="'+k.id+'" style="width:auto">'+["Abierto","En proceso","Resuelto"].map(function(o){return '<option'+(o===k.e?' selected':'')+'>'+o+'</option>'}).join("")+'</select></td></tr>'}).join("")}
+function cnt(k){var o={};S.forEach(function(s){o[s[k]]=(o[s[k]]||0)+1});return Object.keys(o).map(function(x){return [x,o[x]]})}
+function bars(el,p){var m=Math.max.apply(null,p.map(function(a){return a[1]}))||1;$(el).innerHTML=p.map(function(a){return '<div class="brow"><span>'+a[0]+'</span><div class="bw" aria-hidden="true"><div class="bf" style="width:'+Math.round(a[1]/m*100)+'%"></div></div><strong>'+a[1]+'</strong></div>'}).join("")}
+function repAdm(){bars("#rp-cat",cnt("c"));bars("#rp-est",[["Enviadas",18],["En revisión",12],["Aprobadas",11],["Rechazadas",5]]);bars("#rp-loc",cnt("l").sort(function(a,b){return b[1]-a[1]}))}
+function misS(){return S.filter(function(s){return s.e===ENT}).map(function(s){var q=6+s.id%7*3,a=Math.round(q*.6);return{n:s.n,v:40+s.id*13,q:q,a:a}})}
+function repEnt(){var m=misS();$("#rp-ent").innerHTML=m.map(function(s){return '<tr><th scope="row">'+s.n+'</th><td>'+s.v+'</td><td>'+s.q+'</td><td>'+s.a+'</td><td>'+(s.q-s.a)+'</td></tr>'}).join("");bars("#rp-ent2",m.map(function(s){return [s.n,s.q]}))}
+function csv(nom,rows){var t=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(",")}).join("\n");var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+t],{type:"text/csv;charset=utf-8"}));a.download=nom;document.body.appendChild(a);a.click();a.remove();say("Reporte descargado: "+nom)}
+function chat(s){var ent=s==="adm"?$("#adm-ce").value:ENT,L=CH[ent]||[],l=$("#"+s+"-log");l.innerHTML=L.map(function(m){return '<div class="cm'+(m.w===s?' yo':'')+'"><b>'+(m.w==="adm"?"Administrador":esc(ent))+' · '+m.h+'</b>'+esc(m.t)+'</div>'}).join("")||'<p class="hint">Aún no hay mensajes. Escribe el primero.</p>';l.scrollTop=l.scrollHeight}
+function nadm(){$("#tnadm").innerHTML=NEWS.map(function(n){return '<tr><th scope="row">'+esc(n.t)+'</th><td>'+esc(n.by)+'</td><td>'+esc(n.x)+'</td><td>'+(n.est==="Pendiente"?'<button class="btn" data-nv="'+n.id+'|Aprobada">Aprobar<span class="sr"> '+esc(n.t)+'</span></button> <button class="btn sec" data-nv="'+n.id+'|Rechazada">Rechazar<span class="sr"> '+esc(n.t)+'</span></button>':'<span class="badge">'+BD[n.est]+'</span>')+'</td></tr>'}).join("")}
+function nent(){$("#tnent").innerHTML=NEWS.filter(function(n){return n.by===ENT}).map(function(n){return '<tr><th scope="row">'+esc(n.t)+'</th><td>'+n.f+'</td><td><span class="badge">'+BD[n.est]+'</span></td></tr>'}).join("")}
+var RT={inicio:noticias,"adm-tickets":tickets,"adm-reportes":repAdm,"adm-chat":function(){chat("adm")},"adm-noticias":nadm,"ent-reportes":repEnt,"ent-chat":function(){chat("ent")},"ent-noticias":nent};
+CAP["adm-tickets"]="Atiende los tickets y cambia su estado.";CAP["adm-reportes"]="Revisa los reportes de servicios y solicitudes.";CAP["adm-chat"]="Conversa con las entidades registradas.";CAP["adm-noticias"]="Aprueba o rechaza las noticias de las entidades.";CAP["ent-reportes"]="Mira cómo van tus servicios.";CAP["ent-chat"]="Escribe al administrador.";CAP["ent-noticias"]="Propón noticias. El administrador las aprueba.";
+S.forEach(function(s){if(ENTS.indexOf(s.e)<0)ENTS.push(s.e)});ENTS.sort();
+$("#adm-ce").innerHTML=ENTS.map(function(x){return '<option>'+x+'</option>'}).join("");$("#adm-ce").value=ENT;
+$("#adm-ce").addEventListener("change",function(){chat("adm")});
+["adm","ent"].forEach(function(s){$("#"+s+"-cf").addEventListener("submit",function(e){e.preventDefault();var ent=s==="adm"?$("#adm-ce").value:ENT,i=$("#"+s+"-cm");if(!i.value.trim())return;(CH[ent]=CH[ent]||[]).push({w:s,t:i.value.trim(),h:hora()});i.value="";chat(s);i.focus()})});
+$("#ftk").addEventListener("submit",function(e){e.preventDefault();TK.push({id:TK.length+1,t:$("#tk-t").value,p:$("#tk-p").value,e:"Abierto"});this.reset();tickets();say("Ticket creado.")});
+$("#fnews").addEventListener("submit",function(e){e.preventDefault();NEWS.push({id:NEWS.length+1,t:$("#en-t").value,x:$("#en-x").value,f:new Date().toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"}),by:ENT,est:"Pendiente"});this.reset();nent();say("Noticia enviada. Se publicará cuando el administrador la apruebe.")});
+$("#p-o").addEventListener("change",function(){$("#p-ow").hidden=!this.checked;$("#p-ot").required=this.checked;if(this.checked)$("#p-ot").focus()});
+document.addEventListener("change",function(e){var t=e.target;if(t.dataset&&t.dataset.tk){TK.forEach(function(k){if(k.id==t.dataset.tk)k.e=t.value});say("Ticket "+t.dataset.tk+": "+t.value+".")}});
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+ if(b.dataset.sd!==undefined)sdet(+b.dataset.sd);
+ else if(b.id==="sdx"){$("#sdet").hidden=true}
+ else if(b.dataset.nv){var p=b.dataset.nv.split("|");NEWS.forEach(function(n){if(n.id==p[0])n.est=p[1]});nadm();say(p[1]==="Aprobada"?"Noticia aprobada. Ya aparece en el inicio.":"Noticia rechazada.")}
+ else if(b.id==="csv-adm")csv("reporte-inclured.csv",[["Categoría","Servicios"]].concat(cnt("c")))
+ else if(b.id==="csv-ent")csv("reporte-mis-servicios.csv",[["Servicio","Visitas","Solicitudes","Aprobadas"]].concat(misS().map(function(s){return [s.n,s.v,s.q,s.a]})))});
 applyp();saac();msg();init();route();
