@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Servicios de inclusión Bogotá – Prototipo de pantallas</title>
+<title>INCLURED – Servicios de inclusión Bogotá</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='22' cy='30' r='20' fill='%231e2a78'/%3E%3Ccircle cx='38' cy='30' r='20' fill='%23c8102e' fill-opacity='.9'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,10 +12,11 @@
 <a class="skip" href="#main">Saltar al contenido principal</a>
 <header>
  <div class="bar">
-  <a class="logo" href="#inicio">Servicios de inclusión · Bogotá</a>
+  <a class="logo" href="#inicio" aria-label="INCLURED, servicios de inclusión de Bogotá. Ir al inicio"><svg viewBox="0 0 180 60" aria-hidden="true" focusable="false"><circle cx="70" cy="30" r="29" fill="#1e2a78" stroke="#fff" stroke-width="1.5"/><circle cx="110" cy="30" r="29" fill="#c8102e" fill-opacity=".92" stroke="#fff" stroke-width="1.5"/><text x="90" y="36" text-anchor="middle" font-family="Atkinson Hyperlegible,Verdana,sans-serif" font-size="16" font-weight="800" letter-spacing="1" fill="#fff">INCLURED</text></svg><span class="lt">Servicios de inclusión<br>Bogotá</span></a>
   <nav id="nav" aria-label="Principal"></nav>
   <div class="tools" role="group" aria-label="Opciones de accesibilidad y perfil de prueba">
    <button class="btn" id="abtn" aria-expanded="false" aria-controls="apanel">Accesibilidad</button>
+   
    <label for="rol">Ver como</label>
    <select id="rol" style="width:auto"><option value="usuario">Usuario</option><option value="entidad">Entidad</option><option value="admin">Administrador</option></select>
   </div>
@@ -45,6 +47,8 @@
  </div>
  <h2>Explora por categoría</h2>
  <div class="cats" id="cats"></div>
+ <h2>Noticias y novedades</h2>
+ <ul class="plain news" id="news"></ul>
  <div class="two">
   <div class="card"><h2>¿Primera vez aquí?</h2><p>Crea tu cuenta y completa tu perfil. Así podemos mostrarte primero los servicios que te corresponden.</p><a class="btn" href="#acceso">Crear cuenta o ingresar</a></div>
   <div class="card"><h2>Conoce tus derechos</h2><p>Consulta qué garantiza la ley y cuál es la ruta para solicitar atención.</p><a class="btn sec" href="#derechos">Ver derechos y rutas</a></div>
@@ -83,7 +87,16 @@
  <form id="fperfil" class="card">
   <label for="p-n">Nombre</label><input id="p-n" value="Persona de prueba" autocomplete="name">
   <label for="p-l">Localidad de residencia</label><select id="p-l"></select>
-  <fieldset><legend>Tipo de discapacidad (puedes marcar varias)</legend><div id="p-d"></div></fieldset>
+  <fieldset><legend>Tipo de discapacidad (puedes marcar varias)</legend><div id="p-d"></div>
+   <label class="chk"><input type="checkbox" id="p-o"> Otra</label>
+   <div id="p-ow" hidden><label for="p-ot">Escribe cuál</label><input id="p-ot" autocomplete="off"></div>
+  </fieldset>
+  <fieldset><legend>¿Tiene certificado de discapacidad?</legend>
+   <label class="chk"><input type="radio" name="cert" value="si" checked> Sí</label>
+   <label class="chk"><input type="radio" name="cert" value="no"> No</label>
+   <label class="chk"><input type="radio" name="cert" value="tramite"> En trámite</label>
+   <p class="hint">Si no lo tiene, mira la ruta en <a href="#derechos">Derechos y rutas</a>.</p>
+  </fieldset>
   <label for="p-x">Apoyos que necesitas (opcional)</label>
   <textarea id="p-x" placeholder="Ejemplo: intérprete de lengua de señas, rampa de acceso"></textarea>
   <button class="btn" type="submit">Guardar perfil</button>
@@ -113,7 +126,8 @@
 
 <section id="solicitudes" hidden>
  <h1 tabindex="-1">Mis solicitudes</h1>
- <div class="wrap"><table><caption class="sr">Solicitudes enviadas y su estado</caption><thead><tr><th scope="col">Servicio</th><th scope="col">Entidad</th><th scope="col">Estado</th></tr></thead><tbody id="tsol"></tbody></table></div>
+ <div class="wrap"><table><caption class="sr">Solicitudes enviadas y su estado</caption><thead><tr><th scope="col">Servicio</th><th scope="col">Entidad</th><th scope="col">Estado</th><th scope="col">Acción</th></tr></thead><tbody id="tsol"></tbody></table></div>
+ <div class="card" id="sdet" hidden tabindex="-1" style="margin-top:1rem"></div>
  <h2 style="margin-top:1.5rem">Notificaciones</h2>
  <ul class="plain" id="notif"></ul>
 </section>
@@ -156,6 +170,74 @@
  <div class="two"><div class="card"><h2>Categorías</h2><p id="cfgc"></p></div><div class="card"><h2>Localidades disponibles</h2><p id="cfgl"></p></div></div>
 </section>
 
+<section id="adm-tickets" hidden>
+ <h1 tabindex="-1">Tickets de soporte</h1>
+ <p>Incidencias de la plataforma. El administrador es quien las atiende y cambia su estado.</p>
+ <div class="wrap"><table><caption class="sr">Tickets de soporte</caption><thead><tr><th scope="col">N.º</th><th scope="col">Asunto</th><th scope="col">Prioridad</th><th scope="col">Estado</th></tr></thead><tbody id="ttk"></tbody></table></div>
+ <form class="card" id="ftk" style="margin-top:1.25rem">
+  <h2>Crear ticket</h2>
+  <label for="tk-t">Asunto</label><input id="tk-t" required>
+  <label for="tk-p">Prioridad</label><select id="tk-p"><option>Alta</option><option selected>Media</option><option>Baja</option></select>
+  <label for="tk-d">Descripción</label><textarea id="tk-d" required></textarea>
+  <button class="btn" type="submit" style="margin-top:.7rem">Guardar ticket</button>
+ </form>
+</section>
+
+<section id="adm-reportes" hidden>
+ <h1 tabindex="-1">Reportes de la plataforma</h1>
+ <p class="hint">Los servicios salen de los datos reales del prototipo. Las solicitudes son cifras de ejemplo.</p>
+ <div class="two"><div class="card"><h2>Servicios por categoría</h2><div id="rp-cat"></div></div><div class="card"><h2>Solicitudes por estado (este mes)</h2><div id="rp-est"></div></div></div>
+ <div class="card" style="margin-top:1.25rem"><h2>Servicios por localidad</h2><div id="rp-loc"></div></div>
+ <p><button class="btn sec" id="csv-adm">Descargar reporte en CSV</button></p>
+</section>
+
+<section id="adm-chat" hidden>
+ <h1 tabindex="-1">Chat con entidades</h1>
+ <p>Conversa con las entidades registradas en la plataforma.</p>
+ <label for="adm-ce">Entidad</label><select id="adm-ce" style="max-width:26rem"></select>
+ <div class="chatlog" id="adm-log" role="log" aria-live="polite" aria-label="Conversación"></div>
+ <form class="card" id="adm-cf">
+  <label for="adm-cm">Escribe tu mensaje</label><textarea id="adm-cm" required></textarea>
+  <button class="btn" type="submit" style="margin-top:.7rem">Enviar mensaje</button>
+ </form>
+</section>
+
+<section id="adm-noticias" hidden>
+ <h1 tabindex="-1">Noticias por aprobar</h1>
+ <p>Las entidades proponen noticias y novedades. Solo se publican en el inicio cuando las apruebas.</p>
+ <div class="wrap"><table><caption class="sr">Noticias propuestas por las entidades</caption><thead><tr><th scope="col">Título</th><th scope="col">Entidad</th><th scope="col">Contenido</th><th scope="col">Acción</th></tr></thead><tbody id="tnadm"></tbody></table></div>
+</section>
+
+<section id="ent-reportes" hidden>
+ <h1 tabindex="-1">Reportes de mis servicios</h1>
+ <p class="hint">Cifras de ejemplo para el prototipo.</p>
+ <div class="wrap"><table><caption class="sr">Resultados por servicio</caption><thead><tr><th scope="col">Servicio</th><th scope="col">Visitas</th><th scope="col">Solicitudes</th><th scope="col">Aprobadas</th><th scope="col">Pendientes</th></tr></thead><tbody id="rp-ent"></tbody></table></div>
+ <div class="card" style="margin-top:1.25rem"><h2>Solicitudes por servicio</h2><div id="rp-ent2"></div></div>
+ <p><button class="btn sec" id="csv-ent">Descargar reporte en CSV</button></p>
+</section>
+
+<section id="ent-chat" hidden>
+ <h1 tabindex="-1">Chat con el administrador</h1>
+ <p>Escribe al administrador de INCLURED si necesitas ayuda o tienes dudas.</p>
+ <div class="chatlog" id="ent-log" role="log" aria-live="polite" aria-label="Conversación"></div>
+ <form class="card" id="ent-cf">
+  <label for="ent-cm">Escribe tu mensaje</label><textarea id="ent-cm" required></textarea>
+  <button class="btn" type="submit" style="margin-top:.7rem">Enviar mensaje</button>
+ </form>
+</section>
+
+<section id="ent-noticias" hidden>
+ <h1 tabindex="-1">Mis noticias y novedades</h1>
+ <p>Propón una noticia para el inicio. El administrador debe aprobarla antes de publicarla.</p>
+ <form class="card" id="fnews">
+  <label for="en-t">Título</label><input id="en-t" required>
+  <label for="en-x">Contenido</label><textarea id="en-x" required></textarea>
+  <button class="btn" type="submit" style="margin-top:.7rem">Enviar para aprobación</button>
+ </form>
+ <h2 style="margin-top:1.5rem">Mis propuestas</h2>
+ <div class="wrap"><table><caption class="sr">Noticias propuestas y su estado</caption><thead><tr><th scope="col">Título</th><th scope="col">Fecha</th><th scope="col">Estado</th></tr></thead><tbody id="tnent"></tbody></table></div>
+</section>
+
 <section id="saac" hidden>
  <h1 tabindex="-1">Tablero de comunicación (SAAC)</h1>
  <p>Toca las imágenes para armar un mensaje. Pulsa «Hablar» para escucharlo o muéstraselo a otra persona.</p>
@@ -189,7 +271,7 @@
 </section>
 </main>
 
-<footer>Prototipo académico · Diseño con criterios WCAG 2.2 AA · <a href="#privacidad">Política de privacidad</a> · <a href="#derechos">Derechos y rutas</a> · <a href="#accesibilidad">Accesibilidad y contacto</a> · <a href="#saac">Tablero SAAC</a></footer>
+<footer>INCLURED · Prototipo académico · Diseño con criterios WCAG 2.2 AA · <a href="#privacidad">Política de privacidad</a> · <a href="#derechos">Derechos y rutas</a> · <a href="#accesibilidad">Accesibilidad y contacto</a> · <a href="#saac">Tablero SAAC</a></footer>
 <button class="btn fab" id="fab" aria-label="Abrir menú de accesibilidad" aria-controls="apanel"><span aria-hidden="true">♿</span></button>
 <div id="regla" hidden aria-hidden="true"></div>
 <aside id="lsc" hidden aria-label="Intérprete de lengua de señas colombiana"><div style="display:flex;justify-content:space-between;align-items:center"><strong>Intérprete LSC</strong><button class="btn sec" id="lscx">Cerrar<span class="sr"> intérprete</span></button></div><div class="vid"><span><span aria-hidden="true">🧏</span><br>Aquí iría el video del intérprete de LSC de esta pantalla (ejemplo)</span></div><div class="sub" id="lsct" aria-live="polite"></div></aside>
